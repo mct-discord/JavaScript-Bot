@@ -1,5 +1,5 @@
-import { Client } from 'discord.js';
-import { token } from './config.json';
+const { Client } = require('discord.js');
+const { token, prefix } = require('./config.json');
 const client = new Client();
 
 client.once('ready', () => {
@@ -7,7 +7,9 @@ client.once('ready', () => {
 });
 
 client.on('message', message => {
-	console.log(message.content);
+	if (message.content.startsWith(`${prefix}setup`)) {
+		message.channel.send('TODO');
+	}
 });
 
 client.login(token);
