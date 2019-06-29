@@ -6,7 +6,9 @@
   "dependencies": {
     "discord.js": "^12.0.0-dev"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^6.0.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
