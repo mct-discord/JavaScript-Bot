@@ -40,6 +40,19 @@ client.on('message', async message => {
 				message.channel.send(favorites);
 			});
 	}
+	else if (command === 'name') {
+		const canvas_api_token = await keyv.get('canvas_api_token');
+		await fetch('https://leho-howest.instructure.com/api/v1/users/self?access_token=' + canvas_api_token)
+			.then(response => response.json())
+			.then(json => {
+				const names = json.name.split(' ');
+				for (let i = 0; i < names.length; i++) {
+					names[i] = names[i].charAt(0).toUpperCase() + names[i].slice(1).toLowerCase();
+				}
+				const name = names.join(' ');
+				message.channel.send(name);
+			});
+	}
 });
 
 client.login(token);
