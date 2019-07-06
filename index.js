@@ -10,6 +10,7 @@ canvas_access_tokens.on('error', err => console.error('Keyv connection error:', 
 
 client.once('ready', () => {
 	console.log('Ready!');
+	client.user.setActivity('everybody 😶', { type: 'WATCHING' });
 });
 
 async function getCourses(canvas_access_token) {
