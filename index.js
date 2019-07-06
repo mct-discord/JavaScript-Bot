@@ -14,9 +14,13 @@ client.once('ready', () => {
 
 async function getCourses(canvas_api_token) {
 	const courses = [];
-	let next_url = 'https://leho-howest.instructure.com/api/v1/courses?';
+	let next_url = 'https://leho-howest.instructure.com/api/v1/courses';
 	while (next_url !== undefined) {
-		await fetch(next_url + 'access_token=' + canvas_api_token)
+		await fetch(next_url, {
+			headers: {
+				'Authorization': 'Bearer ' + canvas_api_token,
+			},
+		})
 			.then(response => {
 				const next = parseLinkHeader(response.headers.get('Link')).next;
 				if (next) {
@@ -38,7 +42,11 @@ async function getCourses(canvas_api_token) {
 
 async function getFavorites(canvas_api_token) {
 	const favorites = [];
-	await fetch('https://leho-howest.instructure.com/api/v1/users/self/favorites/courses?access_token=' + canvas_api_token)
+	await fetch('https://leho-howest.instructure.com/api/v1/users/self/favorites/courses', {
+		headers: {
+			'Authorization': 'Bearer ' + canvas_api_token,
+		},
+	})
 		.then(response => response.json())
 		.then(json => {
 			for (let i = 0; i < json.length; i++) {
@@ -50,7 +58,11 @@ async function getFavorites(canvas_api_token) {
 
 async function getName(canvas_api_token) {
 	let name = '';
-	await fetch('https://leho-howest.instructure.com/api/v1/users/self?access_token=' + canvas_api_token)
+	await fetch('https://leho-howest.instructure.com/api/v1/users/self', {
+		headers: {
+			'Authorization': 'Bearer ' + canvas_api_token,
+		},
+	})
 		.then(response => response.json())
 		.then(json => {
 			const names = json.name.split(' ');
@@ -64,7 +76,11 @@ async function getName(canvas_api_token) {
 
 async function getUser(canvas_api_token) {
 	let user = '';
-	await fetch('https://leho-howest.instructure.com/api/v1/users/self?access_token=' + canvas_api_token)
+	await fetch('https://leho-howest.instructure.com/api/v1/users/self', {
+		headers: {
+			'Authorization': 'Bearer ' + canvas_api_token,
+		},
+	})
 		.then(response => user = response.json());
 	return user;
 }
