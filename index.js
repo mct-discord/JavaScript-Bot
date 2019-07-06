@@ -98,11 +98,13 @@ client.on('message', async message => {
 			message.channel.send(await getName(canvas_api_token));
 		}
 		else if (command === 'profile') {
+			const reply = await message.channel.send('Loading profile...');
 			const user = await getUser(canvas_api_token);
 			const profile = new Discord.MessageEmbed()
 				.setColor('#e85e00')
 				.setAuthor(await getName(canvas_api_token), user.avatar_url)
 				.addField('Courses', await getCourses(canvas_api_token));
+			reply.delete();
 			message.channel.send(profile);
 		}
 	}
