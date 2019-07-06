@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const Keyv = require('keyv');
 const { prefix, discord_api_token, redis_connection_string } = require('./config.json');
 const fetch = require('node-fetch');
+const parseLinkHeader = require('parse-link-header');
 
 const client = new Discord.Client();
 const canvas_api_tokens = new Keyv(redis_connection_string, { namespace: 'canvas_api_tokens' });
@@ -13,13 +14,25 @@ client.once('ready', () => {
 
 async function getCourses(canvas_api_token) {
 	const courses = [];
-	await fetch('https://leho-howest.instructure.com/api/v1/courses?access_token=' + canvas_api_token)
-		.then(response => response.json())
-		.then(json => {
-			for (let i = 0; i < json.length; i++) {
-				courses.push(json[i].name);
-			}
-		});
+	let next_url = 'https://leho-howest.instructure.com/api/v1/courses?';
+	while (next_url !== undefined) {
+		await fetch(next_url + 'access_token=' + canvas_api_token)
+			.then(response => {
+				const next = parseLinkHeader(response.headers.get('Link')).next;
+				if (next) {
+					next_url = next.url + '&';
+				}
+				else {
+					next_url = undefined;
+				}
+				return response.json();
+			})
+			.then(json => {
+				for (let i = 0; i < json.length; i++) {
+					courses.push(json[i].name);
+				}
+			});
+	}
 	return courses;
 }
 
