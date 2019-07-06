@@ -63,11 +63,11 @@ client.on('message', async message => {
 	if (command === 'token') {
 		const reply = await message.channel.send('Checking Canvas api token...');
 		if (!(await getUser(args[0])).name) {
-			reply.edit('Invalid Canvas api token');
+			reply.edit(':x: Invalid Canvas api token');
 			return;
 		}
 		await canvas_api_tokens.set(message.author.id, args[0]);
-		reply.edit('Canvas api token saved');
+		reply.edit(':white_check_mark: Canvas api token saved');
 	}
 	else {
 		const canvas_api_token = await canvas_api_tokens.get(message.author.id);
