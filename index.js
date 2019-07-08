@@ -87,6 +87,7 @@ async function getUser(canvas_access_token) {
 }
 
 client.on('message', async message => {
+	console.log(message.content);
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const command = args.shift().toLowerCase();
@@ -98,6 +99,7 @@ client.on('message', async message => {
 		}
 		await canvas_access_tokens.set(message.author.id, args[0]);
 		reply.edit(':white_check_mark: Saved Canvas Access Token');
+		return;
 	}
 	else {
 		const canvas_access_token = await canvas_access_tokens.get(message.author.id);
@@ -107,14 +109,17 @@ client.on('message', async message => {
 		}
 		if (command === 'courses') {
 			message.channel.send(await getCourses(canvas_access_token));
+			return;
 		}
-		else if (command === 'favorites') {
+		if (command === 'favorites') {
 			message.channel.send(await getFavorites(canvas_access_token));
+			return;
 		}
-		else if (command === 'name') {
+		if (command === 'name') {
 			message.channel.send(await getName(canvas_access_token));
+			return;
 		}
-		else if (command === 'profile') {
+		if (command === 'profile') {
 			const reply = await message.channel.send('Loading profile...');
 			const user = await getUser(canvas_access_token);
 			const profile = new Discord.MessageEmbed()
@@ -123,6 +128,7 @@ client.on('message', async message => {
 				.addField('Courses', await getCourses(canvas_access_token));
 			reply.delete();
 			message.channel.send(profile);
+			return;
 		}
 	}
 });
