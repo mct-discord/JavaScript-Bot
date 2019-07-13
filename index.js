@@ -122,7 +122,7 @@ client.on('message', async message => {
 		if (command === 'profile') {
 			const reply = await message.channel.send('Loading profile...');
 			const user = await getUser(canvas_access_token);
-			const profile = new Discord.MessageEmbed()
+			const profile = new Discord.RichEmbed()
 				.setColor('#e85e00')
 				.setAuthor(await getName(canvas_access_token), user.avatar_url)
 				.addField('Courses', await getCourses(canvas_access_token));
