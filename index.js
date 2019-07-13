@@ -6,7 +6,7 @@ const parseLinkHeader = require('parse-link-header');
 
 const client = new Discord.Client();
 const canvas_access_tokens = new Keyv(redis_connection_string, { namespace: 'canvas_access_tokens' });
-canvas_access_tokens.on('error', err => console.error('Keyv connection error:', err));
+canvas_access_tokens.on('error', e => console.error('Keyv connection error:', e));
 
 client.once('ready', () => {
 	console.log('Ready!');
@@ -87,11 +87,15 @@ async function getUser(canvas_access_token) {
 }
 
 client.on('message', async message => {
-	console.log(message.content);
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
+	console.log(message.author.username + ': ' + message.content);
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const command = args.shift().toLowerCase();
 	if (command === 'token') {
+		if (args.length === 0) {
+			message.channel.send('Please specify a Canvas Access Token: ```!token <canvas_access_token>```');
+			return;
+		}
 		const reply = await message.channel.send('Checking Canvas Access Token...');
 		if (!(await getUser(args[0])).name) {
 			reply.edit(':x: Invalid Canvas Access Token');
