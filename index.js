@@ -32,7 +32,7 @@ client.on('message', async message => {
 	else {
 		const canvas_access_token = await canvas_access_tokens.get(message.author.id);
 		if (canvas_access_token === undefined) {
-			message.channel.send('First tell me your Canvas Access Token using: ```!token <canvas_access_token>```');
+			message.channel.send('First tell me your Canvas Access Token in a dm using: ```!token <canvas_access_token>```');
 			return;
 		}
 		if (command === 'courses') {

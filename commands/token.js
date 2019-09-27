@@ -4,6 +4,11 @@ module.exports = {
 	name: 'token',
 	description: 'Set your Canvas Access Token',
 	async execute(message, args, canvas_access_tokens) {
+		if (message.channel.type !== 'dm') {
+			message.delete();
+			await message.channel.send('<@' + message.author.id  + '> please do not send your Canvas Access Token in the discord server, send a dm instead');
+			return;
+		}
 		if (args.length === 0) {
 			message.channel.send('Please specify a Canvas Access Token: ```!token <canvas_access_token>```');
 			return;
