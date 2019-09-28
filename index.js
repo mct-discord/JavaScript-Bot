@@ -54,4 +54,4 @@ client.on('message', async message => {
 	}
 });
 
-client.login(discord_api_token);
+client.login(discord_api_token).catch((e) => console.error('Discord.js', e));
