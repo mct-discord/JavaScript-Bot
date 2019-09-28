@@ -27,7 +27,6 @@ client.on('message', async message => {
 	const command = args.shift().toLowerCase();
 	if (command === 'token') {
 		client.commands.get('token').execute(message, args, canvas_access_tokens);
-		return;
 	}
 	else {
 		const canvas_access_token = await canvas_access_tokens.get(message.author.id);

@@ -6,7 +6,7 @@ module.exports = {
 	async execute(message, args, canvas_access_tokens) {
 		if (message.channel.type !== 'dm') {
 			message.delete();
-			await message.channel.send('<@' + message.author.id  + '> please do not send your Canvas Access Token in the discord server, send a dm instead');
+			await message.author.send('<@' + message.author.id + '> please do not send your Canvas Access Token in the discord server, send it here instead');
 			return;
 		}
 		if (args.length === 0) {
