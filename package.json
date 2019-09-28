@@ -11,19 +11,19 @@
     "parse-link-header": "^1.0.1"
   },
   "devDependencies": {
-    "eslint": "^6.0.1"
+    "eslint": "^6.4.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DemeulemeesterJarne/MCT-Discord.git"
+    "url": "git+https://github.com/mct-discord/JavaScript-Bot.git"
   },
   "author": "Jarne Demeulemeester",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DemeulemeesterJarne/MCT-Discord/issues"
+    "url": "https://github.com/mct-discord/JavaScript-Bot/issues"
   },
-  "homepage": "https://github.com/DemeulemeesterJarne/MCT-Discord#readme"
+  "homepage": "https://github.com/mct-discord/JavaScript-Bot#readme"
 }
